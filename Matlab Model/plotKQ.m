@@ -1,0 +1,17 @@
+x_fixed = fixed_point(Xn,7) ;
+b_fixed = fixed_point(bn,8) ;
+Y_16bit = Loc_FIR(x_fixed, b_fixed) ;
+Y_8bit = int16_to_int8(Y_16bit, 8) ;
+dlmwrite('D:\KLTN\Code\filter_int8.txt', x_fixed, 'delimiter', '\n');
+dlmwrite('D:\KLTN\Code\coeff32_int8.txt', b_fixed, 'delimiter', '\n');
+close all;
+Y = load('D:\KLTN\Code\Result.txt') ;
+figure(1) ;
+plot(t,Y_16bit,'g','lineWidth',2) ; hold on ;
+plot(t,Y.*256,'r--','lineWidth',1.2) ;
+xlabel('Thời gian (s)');
+ylabel('Biên độ');
+title('So sanh dang song tao boi Matlab va code C');
+legend('Sóng tạo bởi Matlab', 'Sóng do code C' ) ;
+figure(2);
+plot(x_fixed) ;
